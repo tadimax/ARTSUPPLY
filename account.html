@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Your Account</title>
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+  <!-- Shared header (same pattern as other pages) -->
+  <header class="site-header">
+    <nav class="nav">
+      <a href="index.html">Home</a>
+      <a href="account.html">Account</a>
+      <div class="nav-right">
+        <button data-auth="login" onclick="window.location.href='login.html'">Log In</button>
+        <button data-auth="signup" onclick="window.location.href='signup.html'">Sign Up</button>
+        <div data-auth="user-menu" style="display:none;">
+          <span data-auth="user-email"></span>
+          <a href="account.html">Profile</a>
+          <a href="#" data-auth="logout">Log out</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Your Profile</h1>
+
+    <!-- Shown when not logged in -->
+    <section id="account-guest" style="display:none;">
+      <p>You need to log in to view your account.</p>
+      <button onclick="window.location.href='login.html'">Log In</button>
+      <button onclick="window.location.href='signup.html'">Sign Up</button>
+    </section>
+
+    <!-- Shown when logged in -->
+    <section id="account-authenticated" style="display:none;">
+      <p><strong>Email:</strong> <span id="account-email"></span></p>
+
+      <p>
+        <strong>Account type:</strong>
+        <span id="account-type-label">Fan</span>
+      </p>
+
+      <!-- Only visible if the user is an artist -->
+      <div id="artist-view-toggle" style="display:none; margin-bottom: 1rem;">
+        <label style="display: inline-flex; align-items: center; gap: 0.5rem;">
+          <input type="checkbox" id="view-as-fan-toggle" />
+          View site as fan (hide artist tools)
+        </label>
+      </div>
+
+      <form id="account-form">
+        <label>
+          Display name
+          <input type="text" id="account-display-name" />
+        </label>
+
+        <button type="submit">Save profile</button>
+        <p id="account-message" class="success"></p>
+        <p id="account-error" class="error"></p>
+      </form>
+
+      <!-- Fan view: things any logged-in user can do -->
+      <section id="fan-tools" style="margin-top: 2rem;">
+        <h2>Fan area</h2>
+        <p>
+          Here you’ll see your fan experience: saved tracks, liked releases,
+          followed artists, etc. (placeholder for now).
+        </p>
+      </section>
+
+      <!-- Artist-only tools: hidden if not artist, or if viewing as fan -->
+      <section id="artist-tools" style="margin-top: 2rem; display:none;">
+        <h2>Artist tools</h2>
+        <p>
+          This area is only available to artists. Here you’ll add/manage your
+          releases, see stats, etc. (placeholder for now).
+        </p>
+        <ul>
+          <li>Upload a new track / project</li>
+          <li>Manage existing releases</li>
+          <li>View basic stats</li>
+        </ul>
+      </section>
+    </section>
+  </main>
+
+  <script type="module" src="./assets/js/firebase-config.js"></script>
+  <script type="module" src="./assets/js/auth.js"></script>
+  <script type="module" src="./assets/js/account.js"></script>
+  <script type="module">
+    import { initAuthHeader } from "./assets/js/auth.js";
+    initAuthHeader();
+  </script>
+</body>
+</html>
