@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>About Us | The Collective</title>
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav">
+      <a href="index.html">Home</a>
+      <a href="music.html">Music</a>
+      <a href="artist-directory.html">Artists</a>
+      <a href="merch.html">Merch</a>
+      <a href="artist-dashboard.html" data-auth="artist-link" style="display:none;">Artist Dashboard</a>
+      <a href="cart.html">Cart</a>
+      <div class="nav-right">
+        <button data-auth="login" onclick="window.location.href='login.html'">Log In</button>
+        <button data-auth="signup" onclick="window.location.href='signup.html'">Sign Up</button>
+        <div data-auth="user-menu" style="display:none;">
+          <span data-auth="user-email"></span>
+          <a href="account.html">Profile</a>
+          <a href="#" data-auth="logout">Log out</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="page">
+    <section class="card">
+      <h1>About The Collective</h1>
+      <p class="muted" style="font-size: 1.1rem;">Bridging the gap between Aural & Visual arts.</p>
+      <hr style="border: 0; border-top: 1px solid var(--border-subtle); margin: 20px 0;">
+      
+      <p>
+        We are a platform dedicated to independent creators. We believe that uploading music 
+        and selling merch should be beautiful and accessible. Our mission is to empower 
+        artists with a sleek, modern interface that puts their art first.
+      </p>
+    </section>
+
+    <section style="margin-top: 40px;">
+      <h2 style="text-align: center;">Meet the Team</h2>
+      <div class="team-grid">
+        <div class="team-member card">
+          <div class="team-avatar">💻</div>
+          <h3>John Doe</h3>
+          <p class="muted">Frontend Developer</p>
+        </div>
+        <div class="team-member card">
+          <div class="team-avatar">🎨</div>
+          <h3>Jane Smith</h3>
+          <p class="muted">UI/UX Designer</p>
+        </div>
+        <div class="team-member card">
+          <div class="team-avatar">🚀</div>
+          <h3>Mike Lee</h3>
+          <p class="muted">Backend Engineer</p>
+        </div>
+        <div class="team-member card">
+          <div class="team-avatar">📈</div>
+          <h3>Sarah Connors</h3>
+          <p class="muted">Project Manager</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="assets/js/firebase-config.js"></script>
+  <script type="module" src="assets/js/auth.js"></script>
+  <script type="module" src="assets/js/footer.js"></script>
+  <script type="module">
+    import { initAuthHeader } from "./assets/js/auth.js";
+    initAuthHeader();
+  </script>
+  <script type="module" src="assets/js/footer.js"></script>
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Music | The Collective</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav">
+      <a href="index.html">Home</a>
+      <a href="music.html" class="active">Music</a>
+      <a href="artist-directory.html">Artists</a>
+      <a href="merch.html">Merch</a>
+      <a href="artist-dashboard.html" data-auth="artist-link" style="display:none;">Artist Dashboard</a>
+      <a href="cart.html">Cart <span id="cart-count-badge"></span></a>
+
+      <div class="nav-right">
+        <button data-auth="login" onclick="window.location.href='login.html'">Log In</button>
+        <button data-auth="signup" onclick="window.location.href='signup.html'">Sign Up</button>
+        <div data-auth="user-menu" style="display:none;">
+          <span data-auth="user-email"></span>
+          <a href="account.html">Profile</a>
+          <a href="#" data-auth="logout">Log out</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <div class="fixed-brand-bg">
+    <div class="bg-text">AURAL</div>
+    <div class="bg-text" style="color: var(--accent); opacity: 0.5;">& VISUAL</div>
+    <div class="bg-text">COLLECTIVE</div>
+  </div>
+
+  <main class="dashboard-layout">
+    <aside class="sidebar-left">
+      <h2>Top Artists</h2>
+      <a href="artist-directory.html" class="artist-list-item">
+        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100" class="mini-avatar" alt="Artist">
+        <div>
+          <div style="font-weight: bold;">Elena Ray</div>
+          <div class="muted">3 New Tracks</div>
+        </div>
+      </a>
+      <a href="artist-directory.html" class="artist-list-item">
+        <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=100" class="mini-avatar" alt="Artist">
+        <div>
+          <div style="font-weight: bold;">The Midnight</div>
+          <div class="muted">Live Tour</div>
+        </div>
+      </a>
+      <a href="artist-directory.html" class="artist-list-item">
+        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=100" class="mini-avatar" alt="Artist">
+        <div>
+          <div style="font-weight: bold;">Sarah J.</div>
+          <div class="muted">Just Joined</div>
+        </div>
+      </a>
+
+      <div class="card" style="margin-top: 40px; background: rgba(255,79,191,0.1); border: 1px solid var(--accent);">
+        <h3 style="color: var(--accent);">Open Call</h3>
+        <p class="muted">Join the collective today.</p>
+        <button onclick="window.location.href='signup.html'" style="width: 100%; margin-top: 10px;">Apply Now</button>
+      </div>
+    </aside>
+
+    <section class="center-feed">
+      
+      <div class="slideshow-wrapper">
+        <div class="slides-track" id="track">
+          <div class="slide-item">
+            <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=1200" alt="Concert">
+            <div class="slide-caption">
+              <h3>Live Sessions: Berlin</h3>
+              <p>Stream the exclusive set now.</p>
+            </div>
+          </div>
+          <div class="slide-item">
+            <img src="https://images.unsplash.com/photo-1501612780327-45045538702b?q=80&w=1200" alt="Guitar">
+            <div class="slide-caption">
+              <h3>New Acoustic Drops</h3>
+              <p>Raw, unfiltered audio from the underground.</p>
+            </div>
+          </div>
+          <div class="slide-item">
+            <img src="https://images.unsplash.com/photo-1544441893-675973e31985?q=80&w=1200" alt="Merch">
+            <div class="slide-caption">
+              <h3>Limited Edition Merch</h3>
+              <p>Get the "Neon" Hoodie before it sells out.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h2>Fresh Audio <a href="artist-directory.html">View All</a></h2>
+        <div class="album-grid">
+          <div class="album-card">
+            <img src="https://images.unsplash.com/photo-1619983081563-430f63602796?q=80" class="album-art" alt="Album">
+            <div style="font-weight: bold;">Neon Dreams</div>
+            <div class="muted">Synthwave</div>
+          </div>
+          <div class="album-card">
+            <img src="https://images.unsplash.com/photo-1621360841013-c768371e93cf?q=80" class="album-art" alt="Album">
+            <div style="font-weight: bold;">Static Noise</div>
+            <div class="muted">Industrial</div>
+          </div>
+          <div class="album-card">
+            <img src="https://images.unsplash.com/photo-1493225255756-d9584f8606e9?q=80" class="album-art" alt="Album">
+            <div style="font-weight: bold;">The Echo</div>
+            <div class="muted">Alternative</div>
+          </div>
+          <div class="album-card">
+            <img src="https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?q=80" class="album-art" alt="Album">
+            <div style="font-weight: bold;">Underground</div>
+            <div class="muted">Techno</div>
+          </div>
+          <div class="album-card">
+            <img src="https://images.unsplash.com/photo-1487180144351-b8472da7d491?q=80" class="album-art" alt="Album">
+            <div style="font-weight: bold;">Deep Blue</div>
+            <div class="muted">Ambient</div>
+          </div>
+           <div class="album-card">
+            <img src="https://images.unsplash.com/photo-1483412033650-1015ddeb83d1?q=80" class="album-art" alt="Album">
+            <div style="font-weight: bold;">Vinyl Only</div>
+            <div class="muted">Classic Rock</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h2>Featured Visuals</h2>
+        <div class="visuals-wide-grid">
+          <div class="visual-wide-card">
+            <img src="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80" alt="Art">
+            <div class="visual-tag">Photography</div>
+          </div>
+          <div class="visual-wide-card">
+            <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80" alt="Art">
+            <div class="visual-tag">3D Render</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <aside class="sidebar-right">
+      <h2>Exclusive Store</h2>
+      
+      <div class="merch-preview-card">
+        <img src="https://images.unsplash.com/photo-1531694611353-d4758f86fa6d?q=80&w=400" class="merch-img" alt="Vinyl">
+        <h3>Limited Vinyl</h3>
+        <p class="muted">Signed by the artist.</p>
+        <button onclick="window.location.href='merch.html'">Shop Now</button>
+      </div>
+
+      <div class="merch-preview-card">
+        <img src="https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?q=80&w=400" class="merch-img" alt="Shirt">
+        <h3>Tour Tee</h3>
+        <p class="muted">100% Cotton.</p>
+        <button onclick="window.location.href='merch.html'">Shop Now</button>
+      </div>
+
+      <h2>News</h2>
+      <div style="margin-top: 10px;">
+        <div style="margin-bottom: 15px;">
+          <span style="font-size: 0.75rem; color: var(--accent);">OCT 24, 2025</span>
+          <h4 style="margin: 4px 0;">Platform Update</h4>
+          <p class="muted">Improved audio player quality.</p>
+        </div>
+        <div style="margin-bottom: 15px;">
+          <span style="font-size: 0.75rem; color: var(--accent);">OCT 20, 2025</span>
+          <h4 style="margin: 4px 0;">Artist Spotlight</h4>
+          <p class="muted">Interview with The Midnight.</p>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <script type="module" src="assets/js/firebase-config.js"></script>
+  <script type="module" src="assets/js/auth.js"></script>
+  <script type="module" src="assets/js/cart-helpers.js"></script>
+  <script type="module" src="assets/js/footer.js"></script> 
+  
+  <script type="module">
+    import { initAuthHeader } from "./assets/js/auth.js";
+    import { cartCount } from "./assets/js/cart-helpers.js";
+    
+    initAuthHeader();
+
+    // Update Cart Badge
+    const badge = document.getElementById("cart-count-badge");
+    if(badge) {
+      const count = cartCount();
+      badge.textContent = count > 0 ? `(${count})` : "";
+    }
+
+    // Slideshow Logic
+    const track = document.getElementById('track');
+    const slides = document.querySelectorAll('.slide-item');
+    let index = 0;
+    function moveSlide() {
+      index++;
+      if (index >= slides.length) index = 0;
+      track.style.transform = `translateX(-${index * 100}%)`;
+    }
+    setInterval(moveSlide, 3000);
+  </script>
+  <script type="module" src="assets/js/footer.js"></script>
+</body>
+</html>
