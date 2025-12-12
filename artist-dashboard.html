@@ -124,6 +124,41 @@
         <div id="embed-list" class="embed-list">
           <!-- Existing releases render here -->
         </div>
+        <section class="card">
+  <h2>Merchandise</h2>
+  <p class="muted">Add products that show up on your artist page and the global Merch page.</p>
+
+  <form id="merch-form">
+    <label>
+      Product name
+      <input id="merch-title" type="text" placeholder="e.g. NFND Hoodie" required />
+    </label>
+
+    <label>
+      Description (optional)
+      <textarea id="merch-description" rows="3" placeholder="Materials, sizing, details..."></textarea>
+    </label>
+
+    <label>
+      Price (USD)
+      <input id="merch-price" type="text" placeholder="25.00" required />
+    </label>
+
+    <label>
+      Product image (optional)
+      <input id="merch-image" type="file" accept="image/*" />
+    </label>
+
+    <button id="merch-submit-btn" type="submit">Add product</button>
+    <p id="merch-status" class="muted"></p>
+    <p id="merch-error" class="error"></p>
+  </form>
+
+  <h3 style="margin-top:16px;">Your products</h3>
+  <div id="merch-list" class="artists-grid"></div>
+</section>
+
+        
       </section>
 
     </section>

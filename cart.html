@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cart</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+  <script src="https://js.stripe.com/v3/"></script>
+</head>
+
+<body>
+<header class="site-header">
+  <nav class="nav">
+    <a href="index.html">Home</a>
+    <a href="artist-directory.html">Artists</a>
+    <a href="merch.html">Merch</a>
+    <a href="account.html">Account</a>
+
+    <a href="artist-dashboard.html" data-auth="artist-link" style="display:none;">
+      Artist Dashboard
+    </a>
+
+    <div class="nav-right">
+      <button data-auth="login" onclick="window.location.href='login.html'">Log In</button>
+      <button data-auth="signup" onclick="window.location.href='signup.html'">Sign Up</button>
+
+      <div data-auth="user-menu" style="display:none;">
+        <span data-auth="user-email"></span>
+        <a href="account.html">Profile</a>
+        <a href="#" data-auth="logout">Log out</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main class="page">
+  <section class="card">
+    <h1>Your cart</h1>
+    <p class="muted">Review items, adjust quantities, then checkout (Stripe test).</p>
+  </section>
+
+  <section id="cart-empty" class="card" style="display:none;">
+    <p>Your cart is empty.</p>
+    <a class="btn" href="merch.html">Shop merch</a>
+  </section>
+
+  <section id="cart-items" class="card" style="display:none;">
+    <div id="cart-list"></div>
+    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.08); margin:16px 0;" />
+    <p><strong>Subtotal:</strong> <span id="cart-subtotal"></span></p>
+
+    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+      <button id="checkout-btn">Checkout (Stripe test)</button>
+      <button id="clear-cart-btn" style="background:transparent;color:var(--text);border:1px solid rgba(255,255,255,0.18);box-shadow:none;">
+        Clear cart
+      </button>
+    </div>
+
+    <p id="cart-error" class="error"></p>
+    <p class="muted" style="margin-top:10px;">
+      Note: Checkout requires a server endpoint <code>/create-checkout-session</code> (Stripe secret key must stay server-side).
+    </p>
+  </section>
+</main>
+
+<script type="module" src="assets/js/firebase-config.js"></script>
+<script type="module" src="assets/js/auth.js"></script>
+<script type="module" src="assets/js/cart-helpers.js"></script>
+<script type="module" src="assets/js/cart.js"></script>
+<script type="module">
+  import { initAuthHeader } from "./assets/js/auth.js";
+  initAuthHeader();
+</script>
+</body>
+</html>
