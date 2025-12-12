@@ -20,6 +20,8 @@
        style="display:none;">
       Artist Dashboard
     </a>
+    <a href="merch.html">Merch</a>
+    <a href="cart.html">Cart</a>
 
     <div class="nav-right">
       <button data-auth="login" onclick="window.location.href='login.html'">Log In</button>
@@ -69,6 +71,15 @@
     <section class="card">
       <h2>Releases</h2>
       <div id="artist-releases"></div>
+    </section>
+    <section class="card" id="artist-merch">
+      <h2>Merch <span id="artist-cart-count" class="muted"></span></h2>
+      <p class="muted">Support the artist with official merch.</p>
+      <p id="artist-merch-empty" class="muted" style="display:none;">No merch yet.</p>
+      <div id="artist-merch-grid" class="artists-grid"></div>
+      <div style="margin-top:12px;">
+        <a class="btn" href="cart.html">Go to cart</a>
+      </div>
     </section>
 
     <!-- About -->

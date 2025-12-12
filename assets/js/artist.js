@@ -8,8 +8,17 @@ import {
   collection,
   getDocs,
   setDoc,
+  query,
+  where,
 } from "./firebase-config.js";
+
 import { deleteDoc } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
+
+import {
+  addToCart,
+  cartCount,
+  formatMoney,
+} from "./cart-helpers.js";
 
 const loadingSection = document.getElementById("artist-loading");
 const notFoundSection = document.getElementById("artist-not-found");
@@ -22,6 +31,12 @@ const followersEl = document.getElementById("artist-followers");
 const aboutEl = document.getElementById("artist-about");
 const releasesEl = document.getElementById("artist-releases");
 const followBtn = document.getElementById("follow-btn");
+
+// Merch section elements (you must add these to artist.html)
+const merchEl = document.getElementById("artist-merch");
+const merchGrid = document.getElementById("artist-merch-grid");
+const merchEmpty = document.getElementById("artist-merch-empty");
+const cartBadge = document.getElementById("artist-cart-count");
 
 function showLoading() {
   loadingSection.style.display = "block";
@@ -50,7 +65,13 @@ if (!artistUid) {
   throw new Error("[artist] missing uid query parameter");
 }
 
-// render a single release
+function setCartBadge() {
+  if (!cartBadge) return;
+  const c = cartCount();
+  cartBadge.textContent = c > 0 ? `(${c})` : "";
+}
+
+// -------------------- Releases --------------------
 function renderRelease(data) {
   const item = document.createElement("div");
   item.className = "embed-item";
@@ -59,7 +80,6 @@ function renderRelease(data) {
   title.textContent = data.title || "Untitled release";
   item.appendChild(title);
 
-  // optional cover image
   if (data.imageUrl) {
     const img = document.createElement("img");
     img.src = data.imageUrl;
@@ -101,7 +121,6 @@ function renderRelease(data) {
   releasesEl.appendChild(item);
 }
 
-// load releases from Firestore
 async function loadReleases() {
   releasesEl.innerHTML = "";
   const embedsRef = collection(db, "users", artistUid, "embeds");
@@ -115,14 +134,104 @@ async function loadReleases() {
     return;
   }
 
-  snap.forEach((docSnap) => {
-    renderRelease(docSnap.data());
-  });
+  snap.forEach((docSnap) => renderRelease(docSnap.data()));
 }
 
+// -------------------- Merch (NEW) --------------------
+function renderProduct(p) {
+  const card = document.createElement("div");
+  card.className = "artist-card";
+  card.style.display = "flex";
+  card.style.flexDirection = "column";
+  card.style.gap = "10px";
+
+  if (p.imageUrl) {
+    const img = document.createElement("img");
+    img.src = p.imageUrl;
+    img.alt = p.title || "Product image";
+    img.style.width = "100%";
+    img.style.borderRadius = "14px";
+    img.style.maxHeight = "180px";
+    img.style.objectFit = "cover";
+    card.appendChild(img);
+  }
+
+  const title = document.createElement("h3");
+  title.textContent = p.title || "Untitled product";
+  card.appendChild(title);
+
+  const price = document.createElement("p");
+  price.textContent = formatMoney(p.priceCents, (p.currency || "USD").toUpperCase());
+  card.appendChild(price);
+
+  const row = document.createElement("div");
+  row.style.display = "flex";
+  row.style.gap = "10px";
+  row.style.alignItems = "center";
+
+  const addBtn = document.createElement("button");
+  addBtn.textContent = "Add to cart";
+  addBtn.onclick = () => {
+    addToCart({
+      productId: p.id,
+      title: p.title,
+      artistUid: p.artistUid,
+      artistName: p.artistName,
+      priceCents: p.priceCents,
+      currency: p.currency || "usd",
+      imageUrl: p.imageUrl || "",
+      quantity: 1,
+    });
+    setCartBadge();
+  };
+  row.appendChild(addBtn);
+
+  const goCart = document.createElement("a");
+  goCart.href = "cart.html";
+  goCart.className = "btn";
+  goCart.style.background = "transparent";
+  goCart.style.color = "var(--text)";
+  goCart.style.border = "1px solid rgba(255,255,255,0.18)";
+  goCart.style.boxShadow = "none";
+  goCart.textContent = "View cart";
+  row.appendChild(goCart);
+
+  card.appendChild(row);
+  merchGrid.appendChild(card);
+}
+
+async function loadMerch() {
+  if (!merchEl || !merchGrid) return;
+
+  merchGrid.innerHTML = "";
+
+  try {
+    const ref = collection(db, "products");
+    const q = query(ref, where("artistUid", "==", artistUid), where("active", "==", true));
+    const snap = await getDocs(q);
+
+    if (snap.empty) {
+      if (merchEmpty) merchEmpty.style.display = "block";
+      return;
+    }
+
+    if (merchEmpty) merchEmpty.style.display = "none";
+
+    snap.forEach((docSnap) => {
+      renderProduct({ id: docSnap.id, ...docSnap.data() });
+    });
+  } catch (err) {
+    console.error("[artist] load merch failed:", err);
+    if (merchEmpty) {
+      merchEmpty.style.display = "block";
+      merchEmpty.textContent = "Merch could not be loaded.";
+    }
+  }
+}
+
+// -------------------- Profile --------------------
 let currentFollowers = 0;
 
-// load artist profile
 async function loadArtistProfile() {
   showLoading();
   try {
@@ -148,16 +257,13 @@ async function loadArtistProfile() {
 
     if (nameEl) nameEl.textContent = displayName;
     if (aboutEl) aboutEl.textContent = bio;
-    if (followersEl) {
-      followersEl.textContent =
-        followers === 1 ? "1 follower" : `${followers} followers`;
-    }
-    if (avatarEl) {
-      avatarEl.textContent = displayName.charAt(0).toUpperCase();
-      avatarEl.className = "artist-avatar";
-    }
+    if (followersEl) followersEl.textContent = followers === 1 ? "1 follower" : `${followers} followers`;
+    if (avatarEl) avatarEl.textContent = displayName.charAt(0).toUpperCase();
 
+    setCartBadge();
     await loadReleases();
+    await loadMerch();
+
     showProfile();
   } catch (err) {
     console.error("[artist] failed to load artist profile:", err);
@@ -167,7 +273,7 @@ async function loadArtistProfile() {
 
 loadArtistProfile();
 
-// follow / unfollow logic
+// -------------------- Follow logic --------------------
 async function isFollowing(fanUid) {
   const ref = doc(db, "users", fanUid, "follows", artistUid);
   const snap = await getDoc(ref);
@@ -176,23 +282,12 @@ async function isFollowing(fanUid) {
 
 async function setFollowersCount(newCount) {
   currentFollowers = newCount;
-  if (followersEl) {
-    followersEl.textContent =
-      newCount === 1 ? "1 follower" : `${newCount} followers`;
-  }
-  await setDoc(
-    doc(db, "users", artistUid),
-    { followers: newCount },
-    { merge: true }
-  );
+  if (followersEl) followersEl.textContent = newCount === 1 ? "1 follower" : `${newCount} followers`;
+  await setDoc(doc(db, "users", artistUid), { followers: newCount }, { merge: true });
 }
 
 async function follow(fanUid) {
-  await setDoc(
-    doc(db, "users", fanUid, "follows", artistUid),
-    { followedAt: new Date().toISOString() },
-    { merge: true }
-  );
+  await setDoc(doc(db, "users", fanUid, "follows", artistUid), { followedAt: new Date().toISOString() }, { merge: true });
   await setFollowersCount((currentFollowers || 0) + 1);
 }
 
@@ -207,41 +302,31 @@ onAuthStateChanged(auth, async (user) => {
   if (!user) {
     followBtn.textContent = "Log in to follow";
     followBtn.classList.remove("following");
-    followBtn.onclick = () => {
-      window.location.href = "login.html";
-    };
+    followBtn.onclick = () => (window.location.href = "login.html");
     return;
   }
 
   const fanUid = user.uid;
+
   try {
     const following = await isFollowing(fanUid);
-    if (following) {
-      followBtn.textContent = "Following";
-      followBtn.classList.add("following");
-    } else {
-      followBtn.textContent = "Follow";
-      followBtn.classList.remove("following");
-    }
+    followBtn.textContent = following ? "Following" : "Follow";
+    followBtn.classList.toggle("following", following);
 
     followBtn.onclick = async () => {
-      try {
-        const isNowFollowing = await isFollowing(fanUid);
-        if (isNowFollowing) {
-          await unfollow(fanUid);
-          followBtn.textContent = "Follow";
-          followBtn.classList.remove("following");
-        } else {
-          await follow(fanUid);
-          followBtn.textContent = "Following";
-          followBtn.classList.add("following");
-        }
-      } catch (err) {
-        console.error("[artist] follow/unfollow failed:", err);
+      const now = await isFollowing(fanUid);
+      if (now) {
+        await unfollow(fanUid);
+        followBtn.textContent = "Follow";
+        followBtn.classList.remove("following");
+      } else {
+        await follow(fanUid);
+        followBtn.textContent = "Following";
+        followBtn.classList.add("following");
       }
     };
   } catch (err) {
-    console.error("[artist] failed to determine follow state:", err);
+    console.error("[artist] follow state failed:", err);
     followBtn.textContent = "Follow";
   }
 });
