@@ -1,4 +1,4 @@
-// assets/js/artist.js
+//assets/js/artist.js
 import {
   auth,
   db,
@@ -32,7 +32,7 @@ const aboutEl = document.getElementById("artist-about");
 const releasesEl = document.getElementById("artist-releases");
 const followBtn = document.getElementById("follow-btn");
 
-// Merch section elements (you must add these to artist.html)
+//Merch section elements 
 const merchEl = document.getElementById("artist-merch");
 const merchGrid = document.getElementById("artist-merch-grid");
 const merchEmpty = document.getElementById("artist-merch-empty");
@@ -71,7 +71,7 @@ function setCartBadge() {
   cartBadge.textContent = c > 0 ? `(${c})` : "";
 }
 
-// -------------------- Releases --------------------
+//Releases 
 function renderRelease(data) {
   const item = document.createElement("div");
   item.className = "embed-item";
@@ -137,7 +137,7 @@ async function loadReleases() {
   snap.forEach((docSnap) => renderRelease(docSnap.data()));
 }
 
-// -------------------- Merch (NEW) --------------------
+//Merch 
 function renderProduct(p) {
   const card = document.createElement("div");
   card.className = "artist-card";
@@ -229,7 +229,7 @@ async function loadMerch() {
   }
 }
 
-// -------------------- Profile --------------------
+//Profile
 let currentFollowers = 0;
 
 async function loadArtistProfile() {
@@ -273,7 +273,7 @@ async function loadArtistProfile() {
 
 loadArtistProfile();
 
-// -------------------- Follow logic --------------------
+//Follow logic(for clout lol)
 async function isFollowing(fanUid) {
   const ref = doc(db, "users", fanUid, "follows", artistUid);
   const snap = await getDoc(ref);

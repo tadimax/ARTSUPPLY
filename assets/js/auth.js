@@ -14,7 +14,7 @@ export async function ensureUserProfile(user) {
   const snap = await getDoc(ref);
 
   if (!snap.exists()) {
-    // Important: merge so we don't overwrite role/isArtist set during signup
+    //Important: merge so we don't overwrite role/isArtist set during signup
     await setDoc(
       ref,
       {
@@ -39,13 +39,13 @@ export function initAuthHeader() {
     if (user) {
       await ensureUserProfile(user);
 
-      // Default header states
+      //Default header states
       if (loginBtn) loginBtn.style.display = "none";
       if (signupBtn) signupBtn.style.display = "none";
       if (userMenu) userMenu.style.display = "inline-flex";
       if (userEmailSpan) userEmailSpan.textContent = user.email || "";
 
-      // Check if user is artist to toggle artist dashboard link
+      //Check if user is artist to toggle artist dashboard link
       if (artistLink) {
         try {
           const ref = doc(db, "users", user.uid);

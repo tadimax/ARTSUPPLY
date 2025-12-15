@@ -127,12 +127,12 @@ async function checkoutStripeTest() {
   const cart = getCart();
   if (!cart.length) return;
 
-  // IMPORTANT:
-  // This requires a backend endpoint that uses Stripe SECRET KEY to create a Checkout Session.
-  // Your frontend must NEVER contain the secret key.
+  //IMPORTANT:
+  //This requires a backend endpoint that uses Stripe SECRET KEY to create a Checkout Session.
+  //Your frontend must NEVER contain the secret key.
   //
-  // Expected backend response:
-  // { "sessionId": "cs_test_..." }
+  //Expected backend response:
+  //{ "sessionId": "cs_test_..." }
   try {
     const res = await fetch("/create-checkout-session", {
       method: "POST",
@@ -144,14 +144,14 @@ async function checkoutStripeTest() {
     const data = await res.json();
     if (!data.sessionId) throw new Error("Missing sessionId in response");
 
-    // Publishable key only (pk_test_...)
+    //Publishable key only (pk_test_...)
     const stripe = Stripe("pk_test_REPLACE_ME");
     const { error } = await stripe.redirectToCheckout({ sessionId: data.sessionId });
     if (error) throw error;
   } catch (err) {
     console.error("[cart] checkout failed:", err);
     errEl.textContent =
-      "Checkout is not configured yet. You need a backend / Cloud Function at /create-checkout-session and a Stripe publishable key.";
+      "Checkout is not configured yet.";
   }
 }
 

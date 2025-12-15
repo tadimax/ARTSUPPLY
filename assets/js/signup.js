@@ -26,7 +26,7 @@ if (form) {
     const confirmPassword = passwordConfirmInput.value;
     const displayName = displayNameInput.value.trim();
 
-    // Read selected account type directly from THIS form
+    //Read selected account type directly from THIS form
     const formData = new FormData(form);
     const rawAccountType = formData.get("account-type");
 
@@ -47,17 +47,17 @@ if (form) {
     }
 
     try {
-      // 1) Create Auth user
+      //1)Create Auth user
       const cred = await createUserWithEmailAndPassword(auth, email, password);
       console.log("[signup] auth user created:", cred.user.uid);
 
-      // 2) Update display name (Auth profile)
+      //2) Update display name (Auth profile)
       if (displayName) {
         await updateProfile(cred.user, { displayName });
         console.log("[signup] updated auth profile displayName");
       }
 
-      // 3) Write Firestore profile (THIS IS THE CRITICAL PART)
+      //3)Write Firestore profile (dont forgrt this is critical Tadi)
       const userDocRef = doc(db, "users", cred.user.uid);
       const profileData = {
         email,
@@ -75,17 +75,17 @@ if (form) {
       } catch (firestoreErr) {
         console.error("[signup] Firestore setDoc FAILED:", firestoreErr);
         errorEl.textContent = firestoreFriendlyError(firestoreErr);
-        // Don't proceed to email verification or redirect if profile write failed
+        //Don't proceed to email verification or redirect if profile write failed
         return;
       }
 
-      // 4) Optional email verification
+      //4) Optional email verification
       try {
         await sendEmailVerification(cred.user);
         console.log("[signup] sent email verification");
       } catch (verifyErr) {
         console.warn("[signup] sendEmailVerification failed:", verifyErr);
-        // Not fatal for account creation; we still continue
+        //Not fatal for account creation; we still continue
       }
 
       successEl.textContent = "Account created! Check your email to verify.";

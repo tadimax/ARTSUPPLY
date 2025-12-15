@@ -1,4 +1,4 @@
-// assets/js/login.js
+//assets/js/login.js
 import { auth } from "./firebase-config.js";
 import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
 

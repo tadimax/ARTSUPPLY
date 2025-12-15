@@ -28,7 +28,7 @@ const artistEmailSpan = document.getElementById("artist-email");
 const statReleases = document.getElementById("stat-releases");
 const statFollowers = document.getElementById("stat-followers");
 
-// Releases/embeds
+//Releases/embeds
 const addEmbedForm = document.getElementById("add-embed-form");
 const embedTitleInput = document.getElementById("embed-title");
 const embedCodeInput = document.getElementById("embed-code");
@@ -39,7 +39,7 @@ const embedStatus = document.getElementById("embed-status");
 const embedSubmitBtn = document.getElementById("embed-submit-btn");
 const embedList = document.getElementById("embed-list");
 
-// Merch (NEW)
+//Merch (NEW)
 const merchForm = document.getElementById("merch-form");
 const merchTitleInput = document.getElementById("merch-title");
 const merchDescInput = document.getElementById("merch-description");
@@ -60,7 +60,7 @@ function showState(state) {
   if (dashboardSection) dashboardSection.style.display = state === "dashboard" ? "block" : "none";
 }
 
-// ---------- Upload helper ----------
+//Upload helper 
 async function uploadFile(file, pathPrefix) {
   const safeName = file.name.replace(/\s+/g, "_");
   const fullPath = `${pathPrefix}/${Date.now()}_${safeName}`;
@@ -74,7 +74,7 @@ async function uploadFile(file, pathPrefix) {
   return await getDownloadURL(ref);
 }
 
-// ---------- Releases UI ----------
+//Releases UI 
 function renderEmbed(docId, data) {
   if (!embedList) return;
 
@@ -210,7 +210,7 @@ async function handleSubmitRelease(e) {
   }
 }
 
-// ---------- Merch (NEW) ----------
+//Merch (NEW) 
 function formatMoney(cents, currency = "USD") {
   return new Intl.NumberFormat(undefined, { style: "currency", currency }).format((cents || 0) / 100);
 }
@@ -340,7 +340,7 @@ async function handleSubmitMerch(e) {
   }
 }
 
-// ---------- Auth gate ----------
+//Auth gate 
 onAuthStateChanged(auth, async (user) => {
   if (!user) {
     showState("denied");

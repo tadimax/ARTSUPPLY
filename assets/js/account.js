@@ -23,10 +23,10 @@ const fanToolsSection = document.getElementById("fan-tools");
 const artistViewToggleContainer = document.getElementById("artist-view-toggle");
 const viewAsFanToggle = document.getElementById("view-as-fan-toggle");
 
-// LocalStorage key for the optional "view as fan" mode
+//LocalStorage key for the optional "view as fan" mode
 const VIEW_MODE_KEY = "viewMode"; // "artist" | "fan"
 
-// Read current view mode from localStorage (default: "artist")
+//Read current view mode from localStorage (default: "artist")
 function getViewMode() {
   const stored = localStorage.getItem(VIEW_MODE_KEY);
   if (stored === "fan" || stored === "artist") {
@@ -40,18 +40,17 @@ function setViewMode(mode) {
   localStorage.setItem(VIEW_MODE_KEY, mode);
 }
 
-/**
- * Update which sections are visible based on:
- * - isArtist (from Firestore)
- * - viewMode (from localStorage / toggle)
+/*Update which sections are visible based on:
+  - isArtist (from Firestore)
+  - viewMode (from localStorage / toggle)
  */
 function updateSectionsVisibility({ isArtist, viewMode }) {
-  // Fan tools are available to ANY logged-in user
+  //Fan tools are available to ANY logged-in user
   if (fanToolsSection) {
     fanToolsSection.style.display = "block";
   }
 
-  // Artist-only tools
+  //Artist-only tools
   if (artistToolsSection) {
     if (isArtist && viewMode !== "fan") {
       artistToolsSection.style.display = "block";
@@ -60,21 +59,21 @@ function updateSectionsVisibility({ isArtist, viewMode }) {
     }
   }
 
-  // Toggle control visibility
+  //Toggle control visibility
   if (artistViewToggleContainer) {
     artistViewToggleContainer.style.display = isArtist ? "block" : "none";
   }
 
-  // Toggle checked state: checked == "view as fan"
+  //Toggle checked state: checked == "view as fan"
   if (viewAsFanToggle) {
     viewAsFanToggle.checked = viewMode === "fan";
   }
 }
 
-// Listen for auth state changes
+//Listen for auth state changes
 onAuthStateChanged(auth, async (user) => {
   if (!user) {
-    // Not logged in
+    //Not logged in
     if (guestSection) guestSection.style.display = "block";
     if (authSection) authSection.style.display = "none";
     return;
@@ -85,7 +84,7 @@ onAuthStateChanged(auth, async (user) => {
 
   emailSpan.textContent = user.email;
 
-  // Load Firestore profile
+  //Load Firestore profile
   const ref = doc(db, "users", user.uid);
   const snap = await getDoc(ref);
 
@@ -98,15 +97,15 @@ onAuthStateChanged(auth, async (user) => {
     displayName = data.displayName || "";
   }
 
-  // Set display name input
+  //Set display name input
   displayInput.value = displayName;
 
-  // Account type label
+  //Account type label
   if (accountTypeLabel) {
     accountTypeLabel.textContent = isArtist ? "Artist" : "Fan";
   }
 
-  // If not artist, force viewMode to "fan"
+  //If not artist, force viewMode to "fan"
   let viewMode = getViewMode();
   if (!isArtist) {
     viewMode = "fan";
@@ -115,7 +114,7 @@ onAuthStateChanged(auth, async (user) => {
 
   updateSectionsVisibility({ isArtist, viewMode });
 
-  // Hook up the toggle only once auth and profile are known
+  //Hook up the toggle only once auth and profile are known
   if (viewAsFanToggle) {
     viewAsFanToggle.onchange = () => {
       if (!isArtist) {
@@ -130,7 +129,7 @@ onAuthStateChanged(auth, async (user) => {
   }
 });
 
-// Save profile changes
+//Save profile changes
 if (form) {
   form.addEventListener("submit", async (e) => {
     e.preventDefault();

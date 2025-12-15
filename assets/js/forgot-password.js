@@ -1,4 +1,4 @@
-// assets/js/forgot-password.js
+//assets/js/forgot-password.js
 import { auth } from "./firebase-config.js";
 import { sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
 

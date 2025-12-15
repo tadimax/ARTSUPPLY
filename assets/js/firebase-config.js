@@ -48,7 +48,7 @@ export {
   storage,
   onAuthStateChanged,
   signOut,
-  // Firestore helpers
+  //Firestore helpers
   doc,
   getDoc,
   setDoc,
@@ -58,7 +58,7 @@ export {
   query,
   orderBy,
   where,
-  // Storage helpers
+  //Storage helpers
   storageRef,
   uploadBytesResumable,
   getDownloadURL,

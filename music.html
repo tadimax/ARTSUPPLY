@@ -191,14 +191,14 @@
     
     initAuthHeader();
 
-    // Update Cart Badge
+    //Update Cart Badge
     const badge = document.getElementById("cart-count-badge");
     if(badge) {
       const count = cartCount();
       badge.textContent = count > 0 ? `(${count})` : "";
     }
 
-    // Slideshow Logic
+    //Slideshow Logic
     const track = document.getElementById('track');
     const slides = document.querySelectorAll('.slide-item');
     let index = 0;

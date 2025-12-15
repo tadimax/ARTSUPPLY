@@ -20,5 +20,5 @@ export function initFooter() {
   document.body.insertAdjacentHTML('beforeend', footerHTML);
 }
 
-// Auto-run if imported as a module
+//Auto-run if imported as a module
 initFooter();

@@ -38,9 +38,7 @@ body {
   min-height: 100%;
 }
 
-/* =========================================================
-   Body background
-   ========================================================= */
+/* Body background */
 
 body {
   font-family: var(--font-main);
@@ -53,7 +51,7 @@ body {
   flex-direction: column;
 }
 
-/* ✅ Sticky footer foundation: main expands, footer goes to bottom */
+/* Sticky footer foundation: main expands, footer goes to bottom */
 main {
   flex: 1;
 }
@@ -74,9 +72,8 @@ body::before {
   z-index: -5;
 }
 
-/* =========================================================
-   Video background + Three.js layering 
-   ========================================================= */
+/*Video background + Three.js layering 
+ 
 
 /* Video is the farthest back */
 .bg-video-wrap {
@@ -127,9 +124,7 @@ body::before {
   filter: blur(1.2px) brightness(1.15);
 }
 
-/* =========================================================
-   Layout wrappers
-   ========================================================= */
+/*Layout wrappers */
 
 .page {
   width: 100%;
@@ -140,9 +135,7 @@ body::before {
   z-index: 1;
 }
 
-/* =========================================================
-   Header & nav
-   ========================================================= */
+/* Header & nav */
 
 .site-header {
   position: sticky;
@@ -217,9 +210,7 @@ body::before {
   }
 }
 
-/* =========================================================
-   Buttons
-   ========================================================= */
+/* Buttons  */
 
 button,
 .btn {
@@ -271,9 +262,7 @@ button[disabled],
   background: rgba(255, 255, 255, 0.06);
 }
 
-/* =========================================================
-   Cards
-   ========================================================= */
+/* Cards */
 
 .card {
   background: radial-gradient(
@@ -290,9 +279,7 @@ button[disabled],
   margin-bottom: 20px;
 }
 
-/* =========================================================
-   Typography
-   ========================================================= */
+/* Typography */
 
 h1,
 h2,
@@ -321,9 +308,7 @@ p {
   font-size: 13px;
 }
 
-/* =========================================================
-   Forms
-   ========================================================= */
+/* Forms */
 
 form {
   display: flex;
@@ -376,9 +361,7 @@ select:focus {
   font-size: 13px;
 }
 
-/* =========================================================
-   Artist hero (artist.html)
-   ========================================================= */
+/*Artist hero (artist.html) */
 
 .artist-hero {
   display: flex;
@@ -412,9 +395,7 @@ select:focus {
   background-image: linear-gradient(120deg, #30f29d, #a8ff60);
 }
 
-/* =========================================================
-   Releases / embeds
-   ========================================================= */
+/* Releases / embeds */
 
 .embed-item {
   margin-bottom: 18px;
@@ -432,9 +413,7 @@ select:focus {
   overflow: hidden;
 }
 
-/* =========================================================
-   Artist directory (artist-directory.html)
-   ========================================================= */
+/* Artist directory (artist-directory.html) */
 
 .artist-search-row {
   display: flex;
@@ -502,9 +481,7 @@ select:focus {
   font-size: 12px;
 }
 
-/* =========================================================
-   Auth header user menu
-   ========================================================= */
+/* Auth header user menu */
 
 [data-auth="user-menu"] {
   display: inline-flex;
@@ -517,9 +494,7 @@ select:focus {
   color: var(--text-muted);
 }
 
-/* =========================================================
-   Links
-   ========================================================= */
+/* Links */
 
 a {
   color: var(--accent);
@@ -528,9 +503,7 @@ a:hover {
   text-decoration: underline;
 }
 
-/* =========================================================
-   Hamburger + dropdown navigation
-   ========================================================= */
+/* Hamburger + dropdown navigation */
 
 .side-menu {
   position: fixed;
@@ -621,9 +594,7 @@ a:hover {
   transform: translateX(3px);
 }
 
-/* =========================================================
-   Landing hero
-   ========================================================= */
+/* Landing hero */
 
 .landing-hero {
   position: relative;
@@ -700,9 +671,7 @@ a:hover {
   }
 }
 
-/* =========================================================
-   Index info blocks + tickets 
-   ========================================================= */
+/* Index info blocks + tickets */
 
 .info-section,
 .how-section,
@@ -829,9 +798,7 @@ a:hover {
   }
 }
 
-/* =========================================================
-   HOW IT WORKS
-   ========================================================= */
+/*  HOW IT WORKS */
 
 .how-wow {
   position: relative;
@@ -1150,9 +1117,7 @@ a:hover {
   }
 }
 
-/* =========================================================
-   LOGIN 
-   ========================================================= */
+/* LOGIN */
 
 .login-shell {
   max-width: 420px;
@@ -1193,9 +1158,7 @@ a:hover {
   }
 }
 
-/* =========================
-   Featured Artist
-   ========================= */
+/* Featured Artist*/
 
 .featured-slots {
   display: grid;
@@ -1225,13 +1188,11 @@ a:hover {
   }
 }
 
-/* =========================================================
-   Footer (shared via footer.js)
-   ========================================================= */
+/* Footer (shared via footer.js) */
 
 #site-footer,
 footer {
-  margin-top: auto; /* ✅ pushes footer to bottom on short pages */
+  margin-top: auto; /*  pushes footer to bottom on short pages */
   width: 100%;
   position: relative;
   z-index: 1;

@@ -1,4 +1,4 @@
-// assets/js/merch.js
+//assets/js/merch.js
 import {
   db,
   collection,

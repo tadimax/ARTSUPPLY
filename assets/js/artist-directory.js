@@ -17,7 +17,7 @@ const artistCountEl = document.getElementById("artist-count");
 
 let allArtists = [];
 
-// Render artists into the grid, with search filter
+//Render artists into the grid, with search filter
 function renderArtists() {
   if (!grid) return;
 
