@@ -6,6 +6,11 @@ import {
   cartSubtotalCents,
   formatMoney,
 } from "./cart-helpers.js";
+import { loadStripe } from "https://cdn.jsdelivr.net/npm/@stripe/stripe-js@5/+esm";
+
+const STRIPE_PUBLISHABLE_KEY =
+  "pk_test_51SegUg2KGuXFUBFGvfem3xL6F7QTutoZc75xrCOOVZIIZwOd8A4VYnTJ9BnVlfQfpXxv53fRLY2FzSqdPplkvgNI005BEwZLLF"; // ✅ ok in frontend
+const stripePromise = loadStripe(STRIPE_PUBLISHABLE_KEY);
 
 const emptyEl = document.getElementById("cart-empty");
 const itemsEl = document.getElementById("cart-items");
@@ -62,7 +67,10 @@ function render() {
     mid.appendChild(by);
 
     const price = document.createElement("p");
-    price.textContent = formatMoney(item.priceCents, (item.currency || "USD").toUpperCase());
+    price.textContent = formatMoney(
+      item.priceCents,
+      (item.currency || "USD").toUpperCase()
+    );
     mid.appendChild(price);
 
     row.appendChild(mid);
@@ -121,37 +129,76 @@ function render() {
   subtotalEl.textContent = formatMoney(subtotal, "USD");
 }
 
-async function checkoutStripeTest() {
-  errEl.textContent = "";
+function setCheckoutLoading(isLoading) {
+  if (!checkoutBtn) return;
+  checkoutBtn.disabled = isLoading;
+  checkoutBtn.textContent = isLoading ? "Processing..." : "Checkout";
+}
+
+/**
+ * Fake checkout (demo mode)
+ * - DOES NOT contact Stripe
+ * - Creates a fake "order" record in localStorage
+ * - Clears cart
+ * - Redirects to a success page if you have one (optional)
+ */
+async function fakeCheckout() {
+  if (errEl) errEl.textContent = "";
 
   const cart = getCart();
-  if (!cart.length) return;
+  if (!cart || cart.length === 0) return;
 
-  //IMPORTANT:
-  //This requires a backend endpoint that uses Stripe SECRET KEY to create a Checkout Session.
-  //Your frontend must NEVER contain the secret key.
-  //
-  //Expected backend response:
-  //{ "sessionId": "cs_test_..." }
+  setCheckoutLoading(true);
+
   try {
-    const res = await fetch("/create-checkout-session", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ items: cart }),
-    });
+    // Optional: ensure Stripe SDK loads (proves key is valid),
+    // but we don't actually create a real session.
+    await stripePromise;
 
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const data = await res.json();
-    if (!data.sessionId) throw new Error("Missing sessionId in response");
+    const subtotal = cartSubtotalCents();
+    const orderId = `demo_${Date.now()}_${Math.random().toString(16).slice(2)}`;
 
-    //Publishable key only (pk_test_...)
-    const stripe = Stripe("pk_test_REPLACE_ME");
-    const { error } = await stripe.redirectToCheckout({ sessionId: data.sessionId });
-    if (error) throw error;
+    const order = {
+      id: orderId,
+      createdAt: new Date().toISOString(),
+      currency: "USD",
+      subtotalCents: subtotal,
+      items: cart.map((i) => ({
+        productId: i.productId,
+        title: i.title || "Item",
+        artistName: i.artistName || "Artist",
+        priceCents: i.priceCents,
+        quantity: i.quantity || 1,
+        imageUrl: i.imageUrl || "",
+      })),
+      status: "paid_demo",
+      provider: "demo",
+    };
+
+    // Persist demo orders locally (so you can show a receipt page later)
+    const prev = JSON.parse(localStorage.getItem("demo_orders") || "[]");
+    prev.unshift(order);
+    localStorage.setItem("demo_orders", JSON.stringify(prev));
+
+    // Clear cart and re-render UI
+    clearCart();
+    render();
+
+    // UX feedback (works even if you don't have a success page)
+    alert(
+      `✅ Demo checkout complete!\n\nOrder: ${orderId}\nTotal: ${formatMoney(
+        subtotal,
+        "USD"
+      )}\n\n(No real payment processed.)`
+    );
+
+    // Optional redirect if you create a page later:
+    // window.location.href = `order-success.html?orderId=${encodeURIComponent(orderId)}`;
   } catch (err) {
-    console.error("[cart] checkout failed:", err);
-    errEl.textContent =
-      "Checkout is not configured yet.";
+    console.error("[cart] fake checkout failed:", err);
+    if (errEl) errEl.textContent = "Demo checkout failed. Try again.";
+  } finally {
+    setCheckoutLoading(false);
   }
 }
 
@@ -163,7 +210,7 @@ if (clearBtn) {
 }
 
 if (checkoutBtn) {
-  checkoutBtn.onclick = checkoutStripeTest;
+  checkoutBtn.onclick = fakeCheckout;
 }
 
 render();
