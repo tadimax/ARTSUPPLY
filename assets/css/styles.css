@@ -1431,3 +1431,14 @@ footer {
     height: 250px; /* Shorter slideshow on mobile */
   }
 }
+/* Force footer links to white no matter what */
+footer a {
+  color: #fff !important;
+}
+
+footer a:hover {
+  color: #fff !important;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+}

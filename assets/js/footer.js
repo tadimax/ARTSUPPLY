@@ -11,7 +11,7 @@ export function initFooter() {
           <a href="contact.html">Contact</a>
         </div>
         <div class="footer-copy">
-          &copy; 2025 Aural & Visual Collective. All Rights Reserved.
+          &copy; ART SUPPLY INCORPORATED EST'25. All Rights Reserved.
         </div>
       </div>
     </footer>
