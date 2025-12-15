@@ -1,44 +1,433 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Log In</title>
-  <link rel="stylesheet" href="assets/css/styles.css" />
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Log In</title>
+    <link rel="stylesheet" href="assets/css/styles.css" />
+  </head>
+  <footer id="site-footer"></footer>
 
-<script type="module" src="/assets/js/firebase-config.js"></script>
-<script type="module" src="/assets/js/auth.js"></script>
+  <body>
+    <!-- 3D-style video background (woman singing) -->
+    <div class="bg-video-wrap">
+      <video
+        class="bg-video"
+        src="assets/video/woman-singing.mp4"
+        autoplay
+        muted
+        loop
+        playsinline
+      ></video>
+      <div class="bg-video-overlay"></div>
+    </div>
 
-<header class="site-header">
-  <nav class="nav">
-    <a href="index.html">Home</a>
-    <a href="account.html">Account</a>
-     <a href="artist-dashboard.html"
-     data-auth="artist-link"
-     style="display:none;">
-     Artist Dashboard
-  </a>
-    <a href="merch.html">Merch</a>
+    <!-- Three.js canvas overlay -->
+    <canvas id="webgl-bg"></canvas>
 
-    <div class="nav-right">
-      <button data-auth="login" onclick="window.location.href='login.html'">
-        Log In
+    <!-- Header / Nav -->
+    <header class="site-header">
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="account.html">Account</a>
+        <!-- keep artist dashboard link if your project uses it -->
+        <a
+          href="artist-dashboard.html"
+          data-auth="artist-link"
+          style="display: none"
+        >
+          Artist Dashboard
+        </a>
+
+        <div class="nav-right">
+          <button data-auth="login" onclick="window.location.href='login.html'">
+            Log In
+          </button>
+          <button
+            data-auth="signup"
+            onclick="window.location.href='signup.html'"
+          >
+            Sign Up
+          </button>
+
+          <!-- User menu (hidden until logged in) -->
+          <div data-auth="user-menu" style="display: none">
+            <span data-auth="user-email"></span>
+            <a href="account.html">Profile</a>
+            <a href="#" data-auth="logout">Log out</a>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <!-- Left Hamburger Navigation (add-on) -->
+    <div class="side-menu">
+      <button class="hamburger" aria-label="Open navigation">
+        <span></span>
+        <span></span>
+        <span></span>
       </button>
-      <button data-auth="signup" onclick="window.location.href='signup.html'">
-        Sign Up
-      </button>
 
-      <!-- User menu (hidden until logged in) -->
-      <div data-auth="user-menu" style="display:none;">
-        <span data-auth="user-email"></span>
-        <a href="account.html">Profile</a>
-        <a href="#" data-auth="logout">Log out</a>
+      <div class="side-menu-panel">
+        <h2 class="side-menu-title">Explore</h2>
+        <a href="about.html">About Us</a>
+        <a href="music.html">Music</a>
+        <a href="tickets.html">Tickets</a>
+        <a href="merch.html">Merch</a>
       </div>
     </div>
-  </nav>
-</header>
-<script type="module">
-  import { initAuthHeader } from "./assets/js/auth.js";
-  initAuthHeader();
-</script>
 
+    <!-- Landing hero headline -->
+    <section class="landing-hero">
+      <div class="landing-inner">
+        <h1 class="landing-headline">
+          <span>WHERE</span>
+          <span>MUSIC, CONCERTS</span>
+          <span>AND MERCH</span>
+          <span>COME TO LIFE</span>
+        </h1>
+
+        <p class="landing-subtitle">WELCOME TO <span>ARTSUPPLY</span></p>
+
+        <button class="hero-cta" onclick="window.location.href='signup.html'">
+          Sign up for free
+        </button>
+      </div>
+    </section>
+
+    <!-- =========================
+     WHAT ARTSUPPLY DOES
+     ========================= -->
+    <section class="info-section">
+      <div class="info-header">
+        <h2>One place for music, concerts, and merch.</h2>
+        <p class="muted">
+          Discover artists, listen to their latest drops, grab official merch,
+          and secure tickets for upcoming shows — all in one flow.
+        </p>
+      </div>
+
+      <div class="feature-grid">
+        <article class="feature-card">
+          <div class="feature-icon">🎧</div>
+          <div
+            class="card-image"
+            style="background-image: url('assets/images/music.jpg')"
+          ></div>
+
+          <h3>Music Discovery</h3>
+          <p class="muted">
+            Browse artists, explore top tracks, and find new favorites fast.
+          </p>
+          <a class="mini-link" href="music.html">Explore Music →</a>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-icon">🎟️</div>
+          <div
+            class="card-image"
+            style="background-image: url('assets/images/ticket.jpg')"
+          ></div>
+          <h3>Concert Tickets</h3>
+          <p class="muted">
+            Verified tickets, real-time availability, and quick checkout.
+          </p>
+          <a class="mini-link" href="tickets.html">Browse Tickets →</a>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-icon">🛍️</div>
+          <div
+            class="card-image"
+            style="background-image: url('assets/images/merch.jpg')"
+          ></div>
+          <h3>Official Merch</h3>
+          <p class="muted">
+            Hoodies, tees, vinyl, and exclusive drops from your artists.
+          </p>
+          <a class="mini-link" href="merch.html">Shop Merch →</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- =========================
+     HOW IT WORKS 
+     ========================= -->
+    <section class="how-wow">
+      <div class="how-wow-wrap">
+        <!-- ✅ Waves are INSIDE the wrap so they clip to the rounded corners -->
+        <div class="how-wave-bg" aria-hidden="true">
+          <svg viewBox="0 0 1200 260" preserveAspectRatio="none">
+            <g fill="none" stroke="rgba(255,79,191,0.55)" stroke-width="2">
+              <ellipse cx="600" cy="130" rx="520" ry="95"></ellipse>
+              <ellipse cx="600" cy="130" rx="440" ry="78"></ellipse>
+              <ellipse cx="600" cy="130" rx="360" ry="62"></ellipse>
+              <ellipse cx="600" cy="130" rx="280" ry="48"></ellipse>
+              <ellipse cx="600" cy="130" rx="200" ry="34"></ellipse>
+            </g>
+          </svg>
+          <div class="how-wave-glow"></div>
+        </div>
+
+        <header class="how-wow-header">
+          <p class="how-wow-kicker">How it works</p>
+          <h2 class="how-wow-title">
+            From discovery to tickets — in one place.
+          </h2>
+          <p class="how-wow-sub">
+            Explore artists, stream featured drops, shop official merch, and
+            book concert tickets — all without leaving Artsupply.
+          </p>
+        </header>
+
+        <div class="how-wow-grid">
+          <!-- Steps -->
+          <div class="how-wow-steps">
+            <div class="how-step">
+              <div class="how-step-badge">1</div>
+              <div class="how-step-body">
+                <div class="how-step-top">
+                  <h3>Pick an artist</h3>
+                  <span class="how-step-tag">Directory</span>
+                </div>
+                <p class="muted">
+                  Browse the artist directory and open a profile with music,
+                  merch, and upcoming shows.
+                </p>
+              </div>
+              <div class="how-step-icon">🎤</div>
+            </div>
+
+            <div class="how-step">
+              <div class="how-step-badge">2</div>
+              <div class="how-step-body">
+                <div class="how-step-top">
+                  <h3>Listen &amp; explore</h3>
+                  <span class="how-step-tag">Music</span>
+                </div>
+                <p class="muted">
+                  Discover tracks, mixes, and featured drops — then save what
+                  you love.
+                </p>
+              </div>
+              <div class="how-step-icon">🎧</div>
+            </div>
+
+            <div class="how-step">
+              <div class="how-step-badge">3</div>
+              <div class="how-step-body">
+                <div class="how-step-top">
+                  <h3>Shop &amp; book</h3>
+                  <span class="how-step-tag">Merch + Tickets</span>
+                </div>
+                <p class="muted">
+                  Grab official merch and secure tickets fast with clear
+                  listings and quick checkout.
+                </p>
+              </div>
+              <div class="how-step-icon">🛍️</div>
+            </div>
+          </div>
+
+          <!-- What you get -->
+          <aside class="how-wow-perks">
+            <div class="perk">
+              <div class="perk-emoji">✨</div>
+              <div>
+                <h4>All-in-one experience</h4>
+                <p class="muted">
+                  Music discovery, concert tickets, and merch — connected to
+                  each artist.
+                </p>
+              </div>
+            </div>
+
+            <div class="perk">
+              <div class="perk-emoji">⚡</div>
+              <div>
+                <h4>Fast, clean browsing</h4>
+                <p class="muted">
+                  Find what you want in seconds — no clutter, no bouncing
+                  between sites.
+                </p>
+              </div>
+            </div>
+
+            <div class="perk">
+              <div class="perk-emoji">🧾</div>
+              <div>
+                <h4>Official drops</h4>
+                <p class="muted">
+                  Support artists directly with verified merch and event
+                  listings.
+                </p>
+              </div>
+            </div>
+          </aside>
+        </div>
+
+        <!-- Keep your buttons -->
+        <div class="how-ctas">
+          <button
+            class="btn how-primary"
+            onclick="window.location.href='artist-directory.html'"
+          >
+            Browse Artists
+          </button>
+          <button
+            class="btn how-secondary"
+            onclick="window.location.href='signup.html'"
+          >
+            Create Account
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================
+     TICKETS
+     ========================= -->
+    <section class="tickets-callout">
+      <div class="tickets-copy">
+        <h2>Live shows, real tickets.</h2>
+        <p class="muted">
+          From intimate club nights to arena tours — Artsupply connects you to
+          official ticket options and curated events.
+        </p>
+        <button class="pill-btn" onclick="window.location.href='tickets.html'">
+          Browse Tickets
+        </button>
+      </div>
+
+      <div class="tickets-panels">
+        <div class="ticket-mini">
+          <span class="tag">This Week</span>
+          <h3>Trending Shows</h3>
+          <p class="muted">See what’s selling fast in your city.</p>
+        </div>
+
+        <div class="ticket-mini">
+          <span class="tag">VIP</span>
+          <h3>Upgrade Moments</h3>
+          <p class="muted">VIP packages & limited bundles.</p>
+        </div>
+
+        <!-- ADD ONLY: Featured Artist  -->
+        <div class="ticket-mini featured-artist-mini">
+          <span class="tag">Featured</span>
+          <h3>Featured Artist</h3>
+          <p class="muted">This week’s spotlight + visuals.</p>
+
+          <!-- image slots -->
+          <div class="featured-slots" aria-label="Featured artist image slots">
+            <div
+              class="featured-slot"
+              style="background-image: url('assets/images/burna.jpg')"
+            ></div>
+            <div
+              class="featured-slot"
+              style="background-image: url('assets/images/taylor.jpeg')"
+            ></div>
+            <div
+              class="featured-slot"
+              style="background-image: url('assets/images/uncle.jpeg')"
+            ></div>
+            <div
+              class="featured-slot"
+              style="background-image: url('assets/images/chris.jpg')"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================
+     FOOTER STRIP
+     ========================= -->
+    <section class="final-cta">
+      <h2>Ready to build your lineup?</h2>
+      <p class="muted">Follow artists, save events, and catch merch drops.</p>
+      <button class="hero-cta" onclick="window.location.href='signup.html'">
+        Find Your Favorite Artist.
+      </button>
+    </section>
+
+    <!-- Script  -->
+
+    <!-- Firebase + auth + login logic (from your original) -->
+    <script type="module" src="assets/js/firebase-config.js"></script>
+    <script type="module" src="assets/js/auth.js"></script>
+    <script type="module" src="assets/js/login.js"></script>
+    <script type="module" src="assets/js/footer.js"></script>
+    <script type="module">
+      import { initAuthHeader } from "./assets/js/auth.js";
+      initAuthHeader();
+    </script>
+
+    <!-- Three.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.155/build/three.min.js"></script>
+
+    <!-- Your Three.js background effect (Option 3 waves) -->
+    <script src="assets/js/three-bg.js"></script>
+
+    <!-- Parallax (only if you're using it elsewhere) -->
+    <script src="assets/js/parallax.js"></script>
+
+    <!-- Force background video autoplay -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const bgVideo = document.querySelector(".bg-video");
+        if (!bgVideo) return;
+
+        bgVideo.muted = true;
+        bgVideo.playsInline = true;
+
+        const playPromise = bgVideo.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(() => {
+            // If browser blocks autoplay, start video on first click
+            const startOnClick = () => {
+              bgVideo.play().catch(() => {});
+              document.removeEventListener("click", startOnClick);
+            };
+            document.addEventListener("click", startOnClick, { once: true });
+          });
+        }
+      });
+    </script>
+    <!-- Artist cards + left nav interactions (add-on) -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // Left hamburger menu toggle
+        const sideMenu = document.querySelector(".side-menu");
+        const hamburger = document.querySelector(".hamburger");
+
+        if (sideMenu && hamburger) {
+          hamburger.addEventListener("click", () => {
+            sideMenu.classList.toggle("open");
+          });
+        }
+
+        // Artist card dropdowns
+        const cardToggles = document.querySelectorAll(".artist-card-toggle");
+
+        cardToggles.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const card = btn.closest(".artist-card");
+            const alreadyOpen = card.classList.contains("open");
+
+            document
+              .querySelectorAll(".artist-card.open")
+              .forEach((openCard) => {
+                openCard.classList.remove("open");
+              });
+
+            if (!alreadyOpen) {
+              card.classList.add("open");
+            }
+          });
+        });
+      });
+      
+    </script>
+  </body>
+</html>

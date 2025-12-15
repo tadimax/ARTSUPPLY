@@ -2,9 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Your Account</title>
   <link rel="stylesheet" href="assets/css/styles.css" />
 </head>
+<footer id="site-footer"></footer>
+
 <body>
   <!-- Shared header (same pattern as other pages) -->
   <header class="site-header">
@@ -60,10 +63,21 @@
       <form id="account-form">
         <label>
           Display name
-          <input type="text" id="account-display-name" />
+          <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin-top:6px;">
+            <input
+              type="text"
+              id="account-display-name"
+              style="width: 280px; max-width: 100%; padding: 8px 12px; font-size: 0.95rem; border-radius: 10px;"
+            />
+            <button
+              type="submit"
+              style="width: auto; padding: 8px 16px; font-size: 0.9rem; border-radius: 999px;"
+            >
+              Save profile
+            </button>
+          </div>
         </label>
 
-        <button type="submit">Save profile</button>
         <p id="account-message" class="success"></p>
         <p id="account-error" class="error"></p>
       </form>
