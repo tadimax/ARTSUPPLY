@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8" />
   <title>Music | The Collective</title>
-  <link rel="icon" type="image/svg+xml" href="assets/favicon/favicon-96x96.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="assets/css/styles.css" />
 </head>
@@ -16,8 +15,8 @@
       <a href="music.html" class="active">Music</a>
       <a href="artist-directory.html">Artists</a>
       <a href="merch.html">Merch</a>
-      <a href="artist-dashboard.html" data-auth="artist-link" style="display:none;">Artist Dashboard</a>
       <a href="cart.html">Cart <span id="cart-count-badge"></span></a>
+      <a href="artist-dashboard.html" data-auth="artist-link" style="display:none;">Artist Dashboard</a>
 
       <div class="nav-right">
         <button data-auth="login" onclick="window.location.href='login.html'">Log In</button>
@@ -31,13 +30,14 @@
     </nav>
   </header>
 
-  <div class="fixed-brand-bg">
-    <div class="bg-text">AURAL</div>
-    <div class="bg-text" style="color: var(--accent); opacity: 0.5;">& VISUAL</div>
-    <div class="bg-text">COLLECTIVE</div>
+  <div class="fixed-brand-bg" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-10deg); width: 100%; text-align: center; z-index: -1; opacity: 0.05; pointer-events: none;">
+    <div style="font-size: 15vw; font-weight: 900; line-height: 0.8; color: #fff;">AURAL</div>
+    <div style="font-size: 15vw; font-weight: 900; line-height: 0.8; color: var(--accent); opacity: 0.5;">& VISUAL</div>
+    <div style="font-size: 15vw; font-weight: 900; line-height: 0.8; color: #fff;">COLLECTIVE</div>
   </div>
 
   <main class="dashboard-layout">
+    
     <aside class="sidebar-left">
       <h2>Top Artists</h2>
       <a href="artist-directory.html" class="artist-list-item">
@@ -98,7 +98,7 @@
       </div>
 
       <div>
-        <h2>Fresh Audio <a href="artist-directory.html">View All</a></h2>
+        <h2>Fresh Audio <a href="artist-directory.html" style="font-size: 0.9rem; float: right;">View All</a></h2>
         <div class="album-grid">
           <div class="album-card">
             <img src="https://images.unsplash.com/photo-1619983081563-430f63602796?q=80" class="album-art" alt="Album">
@@ -106,10 +106,11 @@
             <div class="muted">Synthwave</div>
           </div>
           <div class="album-card">
-            <img src="https://images.unsplash.com/photo-1621360841013-c768371e93cf?q=80" class="album-art" alt="Album">
-            <div style="font-weight: bold;">Static Noise</div>
-            <div class="muted">Industrial</div>
-          </div>
+              <img src="https://images.unsplash.com/photo-1557672172-298e090bd0f1?q=80&w=400" class="album-art" alt="Album">
+  
+          <div style="font-weight: bold;">Static Noise</div>
+             <div class="muted">Industrial</div>
+     </div>
           <div class="album-card">
             <img src="https://images.unsplash.com/photo-1493225255756-d9584f8606e9?q=80" class="album-art" alt="Album">
             <div style="font-weight: bold;">The Echo</div>
@@ -192,14 +193,14 @@
     
     initAuthHeader();
 
-    //Update Cart Badge
+    // Update Cart Badge
     const badge = document.getElementById("cart-count-badge");
     if(badge) {
       const count = cartCount();
       badge.textContent = count > 0 ? `(${count})` : "";
     }
 
-    //Slideshow Logic
+    // Slideshow Logic
     const track = document.getElementById('track');
     const slides = document.querySelectorAll('.slide-item');
     let index = 0;
@@ -210,6 +211,5 @@
     }
     setInterval(moveSlide, 3000);
   </script>
-  <script type="module" src="assets/js/footer.js"></script>
 </body>
 </html>

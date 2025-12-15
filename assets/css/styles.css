@@ -1242,3 +1242,192 @@ footer {
   color: var(--text);
   text-decoration: none;
 }
+/* =========================================================
+   DASHBOARD LAYOUT (Music Page Grid)
+   ========================================================= */
+
+/* 1. The Main Grid Wrapper */
+.dashboard-layout {
+  display: grid;
+  /* Left Sidebar | Center Content | Right Sidebar */
+  grid-template-columns: 260px 1fr 300px; 
+  gap: 24px;
+  max-width: 1600px; /* Wider than normal pages */
+  margin: 0 auto;
+  padding: 20px;
+  min-height: 80vh;
+}
+
+/* 2. Sidebars */
+.sidebar-left, 
+.sidebar-right {
+  /* Makes them stick while scrolling */
+  position: sticky;
+  top: 100px;
+  height: fit-content;
+}
+
+/* Left Sidebar Items (Artists) */
+.artist-list-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  margin-bottom: 8px;
+  border-radius: 12px;
+  transition: background 0.2s;
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--text);
+}
+.artist-list-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+.artist-list-item .mini-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--accent);
+}
+
+/* Right Sidebar Items (Merch Cards) */
+.merch-preview-card {
+  background: rgba(12, 6, 25, 0.6);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  text-align: center;
+}
+.merch-preview-card .merch-img {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  transition: transform 0.3s;
+}
+.merch-preview-card:hover .merch-img {
+  transform: rotate(3deg) scale(1.05);
+}
+
+/* 3. Center Content Area */
+.center-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  min-width: 0; /* Prevents grid blowout */
+}
+
+/* Slideshow */
+.slideshow-wrapper {
+  position: relative;
+  width: 100%;
+  height: 380px;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.slides-track {
+  display: flex;
+  height: 100%;
+  transition: transform 0.5s ease-in-out;
+}
+.slide-item {
+  min-width: 100%;
+  position: relative;
+}
+.slide-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.slide-caption {
+  position: absolute;
+  bottom: 30px;
+  left: 30px;
+  background: rgba(0, 0, 0, 0.75);
+  padding: 12px 24px;
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+  border-left: 4px solid var(--accent);
+}
+
+/* Album Grid (3 Columns inside center) */
+.album-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+}
+.album-card {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  padding: 12px;
+  transition: transform 0.2s;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+.album-card:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--accent);
+}
+.album-art {
+  width: 100%;
+  aspect-ratio: 1/1;
+  border-radius: 8px;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+/* Featured Visuals (Wide cards) */
+.visuals-wide-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.visual-wide-card {
+  height: 220px;
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+}
+.visual-wide-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s;
+}
+.visual-wide-card:hover img {
+  transform: scale(1.1);
+}
+.visual-tag {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: var(--accent);
+  color: #000;
+  padding: 4px 10px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+/* 4. Responsive Design (Mobile) */
+@media (max-width: 1024px) {
+  .dashboard-layout {
+    grid-template-columns: 1fr; /* Stack everything in 1 column */
+    max-width: 100%;
+  }
+  
+  /* Hide sidebars on tablets/mobile to clean up the view */
+  .sidebar-left, 
+  .sidebar-right {
+    display: none; 
+  }
+  
+  .slideshow-wrapper {
+    height: 250px; /* Shorter slideshow on mobile */
+  }
+}
